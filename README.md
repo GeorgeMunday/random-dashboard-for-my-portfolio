@@ -1,0 +1,1 @@
+this is a project that i can show imployers that i can do next js and mongo db 
