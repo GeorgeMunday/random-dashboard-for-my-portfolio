@@ -29,7 +29,7 @@ const Authentification = () => {
           onClick={() => setAuthentificationType("signup")}
           className="text-blue-500 underline"
           >
-              Don't have an account? Sign Up
+              Don&apos;t have an account? Sign Up
           </button>
         <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
             Sign In As Guest

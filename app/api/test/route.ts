@@ -1,6 +1,9 @@
 import { NextResponse } from "next/server";
 import clientPromise from "@/lib/database/connection";
 
+// this file is here to test the connection to the MongoDB database and return a response of sample data
+// it it intended to be used in the application
+
 export async function GET() {
   try {
     const client = await clientPromise;

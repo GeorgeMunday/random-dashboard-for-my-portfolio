@@ -1,5 +1,7 @@
 import { useSyncExternalStore } from "react";
 
+// this file is a custom hook that checks if the user is online or offline and returns a boolean value
+
 function subscribe(callback: () => void) {
   window.addEventListener("online", callback);
   window.addEventListener("offline", callback);

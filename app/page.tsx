@@ -8,6 +8,9 @@ import Authentification from "@/components/organisms/Authentification/Authentifi
 import Header from "@/components/molecules/Header/Header";
 import Information from "@/components/organisms/Information/Information";
 
+// this is the main route of the application and it is responsible for rendering the main page of the application
+// fromt his page you will be able to login and learn information about the application and its features
+
 export default function Home() {
   const wifiConnection = useOnlineStatus();
 
