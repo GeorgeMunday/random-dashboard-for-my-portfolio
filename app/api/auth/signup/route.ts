@@ -8,7 +8,6 @@ export async function POST(req: NextRequest) {
     try {
         const { username, password } = await req.json();
 
-        // Basic validation
         if (!username || !password) {
             return NextResponse.json(
                 {
@@ -34,7 +33,7 @@ export async function POST(req: NextRequest) {
         const client = await clientPromise;
         const db = client.db();
 
-        // Check if username already exists
+        // check if it already exists in the database
         const existingUser = await db.collection("users").findOne({
             username,
         });
@@ -50,23 +49,19 @@ export async function POST(req: NextRequest) {
             );
         }
 
-        // Hash password
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        // Create user
         const result = await db.collection("users").insertOne({
             username,
             password: hashedPassword,
             createdAt: new Date(),
         });
 
-        // Create JWT
         const token = createToken({
             id: result.insertedId.toString(),
             username,
         });
 
-        // Create response
         const response = NextResponse.json({
             message: "Account created successfully.",
             user: {
@@ -75,13 +70,12 @@ export async function POST(req: NextRequest) {
             },
         });
 
-        // Set session cookie
         response.cookies.set("session", token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
             sameSite: "lax",
             path: "/",
-            maxAge: 60 * 60 * 24 * 7, // 7 days
+            maxAge: 60 * 60 * 24 * 7, // 1 week
         });
 
         return response;

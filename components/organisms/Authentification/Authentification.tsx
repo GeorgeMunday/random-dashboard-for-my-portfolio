@@ -41,6 +41,23 @@ const Authentification = () => {
         }
     }
 
+    async function handleGuestSignIn() {
+        setError("");
+        setLoading(true);
+        try {
+            await signin("test@user1", "12345678");
+        } catch (err) {
+            if (err instanceof Error) {
+                setError(err.message);
+            } else {
+                setError("Something went wrong.");
+            }
+        } finally {
+            setLoading(false);
+            router.push("/dashboard");
+        }
+    }
+
     async function handleSignUp(e: React.FormEvent) {
         e.preventDefault();
 
@@ -127,6 +144,15 @@ const Authentification = () => {
                     Don&apos;t have an account? Sign Up
                 </button>
 
+                <button
+                    onClick={() => {
+                        handleGuestSignIn();
+                    }}
+                    className="rounded bg-blue-500 px-4 py-2 text-white"
+                >
+                    Sign in as Guest
+                </button>
+
             </div>
         );
     }
@@ -197,6 +223,16 @@ const Authentification = () => {
                 className="text-blue-500 underline"
             >
                 Already have an account? Sign In
+            </button>
+
+            <button
+                onClick={() => {
+                    setError("");
+                    setLoading(true);
+                }}
+                className="rounded bg-blue-500 px-4 py-2 text-white"
+            >
+                Sign in as Guest
             </button>
 
         </div>
