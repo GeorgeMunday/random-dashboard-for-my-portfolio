@@ -1,6 +1,7 @@
 "use client";
-
+    
 import { useAuth } from "@/lib/context/AuthContext";
+import useOnlineStatus from "@/lib/customHooks/useOnlineStatus";
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -14,9 +15,10 @@ export  function Dashboard() {
     const [information, setInformation] = useState(false);
 
     const { user, loading, signout } = useAuth();
+    const isOnline = useOnlineStatus();
 
     const router = useRouter();
-    
+
     const [randomNum, setRandomNum] = useState(0)
 
     const randomLoader = () => {
@@ -154,13 +156,13 @@ export  function Dashboard() {
                         </div>
 
                         <div className="rounded-lg bg-blue-100 p-4 text-center dark:bg-neutral-800">
-                            <p className="text-2xl font-bold text-blue-500">72°F</p>
-                            <p className="text-sm text-black">Temperature</p>
+                            <p className="text-2xl font-bold text-blue-500">72</p>
+                            <p className="text-sm text-black">Sample Data Comments</p>
                         </div>
 
                         <div className="rounded-lg bg-blue-100 p-4 text-center dark:bg-neutral-800">
-                            <p className="text-2xl font-bold text-blue-500">1,024</p>
-                            <p className="text-sm text-black">Movies</p>
+                            <p className="text-2xl font-bold text-blue-500">100</p>
+                            <p className="text-sm text-black">Sample Data Theaters</p>
                         </div>
                     </div>
                 </div>
@@ -186,6 +188,22 @@ export  function Dashboard() {
                     <h2 className="text-lg font-semibold">
                           Server Information  
                     </h2>
+                     <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-3">
+                        <div className="rounded-lg bg-blue-100 p-4 text-center dark:bg-neutral-800">
+                            <p className="text-2xl font-bold text-blue-500">{isOnline ? "Connected" : "Disconnected"}</p>
+                            <p className="text-sm text-black">WiFi Status</p>
+                        </div>
+
+                        <div className="rounded-lg bg-blue-100 p-4 text-center dark:bg-neutral-800">
+                            <p className="text-2xl font-bold text-blue-500">12ms</p>
+                            <p className="text-sm text-black">Server Latency</p>
+                        </div>
+
+                        <div className="rounded-lg bg-blue-100 p-4 text-center dark:bg-neutral-800">
+                            <p className="text-2xl font-bold text-blue-500">Online</p>
+                            <p className="text-sm text-black">Database Status</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </main>
