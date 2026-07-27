@@ -3,19 +3,86 @@
 import { useAuth } from "@/lib/context/AuthContext";
 
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import {FaArrowRight} from "react-icons/fa"
 
 import Header from "@/components/molecules/Header/Header";
 import Information from "@/components/organisms/Information/Information";
+import getAllTheaters from "@/lib/helpers/allTheaters/script";
+import getMostCommonState from "@/lib/helpers/getMostCommonState/script";
+
+interface MostCommonState {
+  mostCommonState: string;
+  count: number;
+  timestamp: number;
+}
 
 export  function Dashboard() {
     const [information, setInformation] = useState(false);
+    const [theaterCount, setTheaterCount] = useState<number | null>(null);
+    const [randomNum, setRandomNum] = useState(0);
+    const [firstLoad, setFirstLoad] = useState(true);
+    const [data, setData] = useState<MostCommonState | null>(null);
 
     const { user, loading, signout } = useAuth();
 
     const router = useRouter();
+
+        const randomLoader = () => {
+        setFirstLoad(false);
+        for (let i = 0; i < 10; i++) {
+            setTimeout(() => {
+                const randomNumber = Math.floor(Math.random() * 3);
+                setRandomNum(randomNumber);
+            }, 100 * i);
+        }
+        setTimeout(() => {
+            handelRandomButtonClick();
+        }, 1000);
+    };
+
+    const handelRandomButtonClick = () => {
+        if (randomNum === 0) {
+            router.push("/dashboard/comments");
+        } 
+         else if (randomNum === 1) {
+            router.push("/dashboard/theaters/display");
+        } else if (randomNum === 2) {
+            router.push("/dashboard/theaters/search");
+        }
+    };
+
+    useEffect(() => {
+        if (!user) return;
+
+        async function loadTheaterCount() {
+            try {
+                const count = await getAllTheaters();
+                setTheaterCount(count);
+            }
+            catch (error) {
+                console.error("Failed to load theater count:", error);
+                setTheaterCount(null);
+            }
+        }
+
+        loadTheaterCount();
+    }, [user]);
+
+     useEffect(() => {
+    async function fetchData() {
+      try {
+        const result = await getMostCommonState();
+        setData(result);
+      } catch (error) {
+        console.error(error);
+      } finally {
+      }
+    }
+
+    fetchData();
+  }, []);
 
     if (loading) {
         return (
@@ -103,19 +170,55 @@ export  function Dashboard() {
                             <button className="flex transition items-center gap-2 underline text-blue-500 font-semibold"
                             onClick={
                                 () => {
-                                    router.push("/dashboard/theaters");
+                                    router.push("/dashboard/theaters/display");
                                 }
                             }>
-                                Go to Theaters Dashboard <FaArrowRight />
+                                Go to Display Theaters <FaArrowRight />
+                            </button>
+                             <button className="flex transition items-center gap-2 underline text-blue-500 font-semibold"
+                            onClick={
+                                () => {
+                                    router.push("/dashboard/theaters/search");
+                                }
+                            }>
+                                Go to Search <FaArrowRight />
                             </button>
                             </div>
                         </div>
                         <div className="rounded-xl bg-white p-6 shadow dark:bg-neutral-900 w-full md:w-1/2">
                             <h2 className="text-lg font-semibold">
-                                Display Theaters
+                                Random Page Navigation
                             </h2>
+                            
+                             <div className="flex items-center justify-center h-full pb-6  ">
+                                <button
+                                    type="button"
+                                    className="flex h-20 w-20 items-center text-white justify-center rounded-full bg-blue-500 text-sm font-medium text-neutral-700transition hover:bg-blue-400"
+                                    onClick={randomLoader}
+                                >
+                                    {firstLoad ? "Random" : randomNum === 0 ? "Comments" : randomNum === 1 ? "Display" : randomNum === 2 ? "Search" : "Random"}
+                                </button>
+                            </div>
                         </div>
                     </div>
+                    <div className="rounded-xl bg-white p-6 shadow dark:bg-neutral-900">
+                        <h2 className="text-lg font-semibold">Theater Information</h2>
+                        <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
+                            <div className="rounded-lg bg-blue-100 p-4 text-center dark:bg-neutral-800">
+                                <p className="text-2xl font-bold text-blue-500">
+                                   {theaterCount !== null ? theaterCount : "Loading..."}
+                                </p>
+                                <p className="text-sm text-black">Number of Theaters</p>
+                            </div>
+
+                        <div className="rounded-lg bg-blue-100 p-4 text-center dark:bg-neutral-800">
+                            <p className="text-2xl font-bold text-blue-500"> 
+                                {data ? data.mostCommonState : "Loading..."}
+                            </p>
+                            <p className="text-sm text-black">Most Common State</p>
+                        </div>
+                    </div>
+                </div>
                </div>
         </main>
     );

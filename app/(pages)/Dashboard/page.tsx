@@ -68,7 +68,7 @@ export function Dashboard() {
 
         async function checkDatabase() {
             const result = await testDatabaseConnection();
-            setDbStatus(result.connected ? "Connected" : "Disconnected");
+            setDbStatus(result.connected ? "Online" : "Offline");
             setApiTime(result.apiTime);
         }
 
