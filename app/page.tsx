@@ -8,24 +8,17 @@ import Authentification from "@/components/organisms/Authentification/Authentifi
 import Header from "@/components/molecules/Header/Header";
 import Information from "@/components/organisms/Information/Information";
 
+// this is the main route of the application and it is responsible for rendering the main page of the application
+// fromt his page you will be able to login and learn information about the application and its features
+
 export default function Home() {
   const wifiConnection = useOnlineStatus();
-
-  const [error, setError] = useState<string | null>(null);
   const [information, setInformation] = useState(false);
 
   if (!wifiConnection) {
     return (
       <div className="flex flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
         No internet connection
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="flex flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-        Error: {error}
       </div>
     );
   }
