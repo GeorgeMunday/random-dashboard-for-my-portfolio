@@ -5,7 +5,7 @@ export async function GET() {
   try {
     const client = await clientPromise;
 
-    const db = client.db("test");
+    const db = client.db("sample_mflix");
     const collectionLength = await db.collection("comments").countDocuments();
 
     return NextResponse.json({

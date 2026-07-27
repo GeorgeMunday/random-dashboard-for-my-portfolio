@@ -1,36 +1,56 @@
 import axios from "axios";
 
-const CACHE_KEY = process.env.NEXT_PUBLIC_USERSALL_CACHE_KEY || "";
+const CACHE_KEY = process.env.NEXT_PUBLIC_DBSTATUS_CACHE_KEY || "dbStatusCache";
 const CACHE_TIME = 5 * 60 * 1000;
 
-export default async function getAllUsers() {
+interface DbTestResult {
+    connected: boolean;
+    apiTime: number | null;
+}
+
+export default async function testDatabaseConnection(): Promise<DbTestResult> {
     if (typeof window !== "undefined") {
         const cached = localStorage.getItem(CACHE_KEY);
 
         if (cached) {
-            const data = JSON.parse(cached);
+            try {
+                const data = JSON.parse(cached);
 
-            if (
-                Date.now() - data.timestamp < CACHE_TIME &&
-                typeof data.users === "number"
-            ) {
-                return data.users;
+                if (
+                    data &&
+                    typeof data.timestamp === "number" &&
+                    typeof data.connected === "boolean" &&
+                    typeof data.apiTime === "number" &&
+                    Date.now() - data.timestamp < CACHE_TIME
+                ) {
+                    return { connected: data.connected, apiTime: data.apiTime };
+                }
+            } catch (error) {
+                console.warn("Corrupted db status cache, refetching:", error);
+                localStorage.removeItem(CACHE_KEY);
             }
         }
 
         try {
-            const response = await axios.get("/api/users/count");
-            const count = response.data?.collectionLength ?? 0;
+            const start = performance.now();
+            const response = await axios.get("/api/test");
+            const apiTime = performance.now() - start;
+
+            const connected = response.data?.connected === true;
             const result = {
-                users: count,
+                connected,
+                apiTime,
                 timestamp: Date.now(),
             };
+
             localStorage.setItem(CACHE_KEY, JSON.stringify(result));
-            return result.users;
+
+            return { connected, apiTime };
         } catch (error) {
-            console.error("Error fetching all users:", error);
-            throw error;
+            console.error("Error testing database connection:", error);
+            return { connected: false, apiTime: null };
         }
     }
-    return null;
+
+    return { connected: false, apiTime: null };
 }

@@ -14,6 +14,7 @@ export async function GET() {
     const documents = await collection.find({}).limit(10).toArray();
 
     return NextResponse.json({
+      connected: true,
       message: "Connection successful",
       documents,
     });

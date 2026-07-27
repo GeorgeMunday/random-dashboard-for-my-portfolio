@@ -11,6 +11,8 @@ import { FaArrowRight } from "react-icons/fa";
 
 import Header from "@/components/molecules/Header/Header";
 import Information from "@/components/organisms/Information/Information";
+import getAllComments from "@/lib/helpers/allComments/script";
+import getAllTheaters from "@/lib/helpers/allTheaters/script";
 import getAllUsers from "@/lib/helpers/allUsers/script";
 
 export function Dashboard() {
@@ -94,9 +96,8 @@ export function Dashboard() {
 
         async function loadTheaterCount() {
             try {
-                const response = await fetch("/api/theaters/count");
-                const data = await response.json();
-                setTheaterCount(data.collectionLength);
+                const count = await getAllTheaters();
+                setTheaterCount(count);
             }
             catch (error) {
                 console.error("Failed to load theater count:", error);
@@ -112,9 +113,8 @@ export function Dashboard() {
 
         async function loadCommentCount() {
             try {
-                const response = await fetch("/api/comments/count");
-                const data = await response.json();
-                setCommentCount(data.collectionLength);
+                const count = await getAllComments();
+                setCommentCount(count);
             }
             catch (error) {
                 console.error("Failed to load comment count:", error);
