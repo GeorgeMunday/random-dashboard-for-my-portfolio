@@ -1,12 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "@/lib/context/AuthContext";
 
 import { useRouter } from "next/navigation";
 
 const Authentification = () => {
-    const { signin, signup } = useAuth();
+    const { signin, signup, user } = useAuth();
 
     const [authentificationType, setAuthentificationType] = useState<"signin" | "signup">("signin");
 
@@ -83,6 +83,16 @@ const Authentification = () => {
         } finally {
             setLoading(false);
         }
+    }
+
+    useEffect(() => {
+        if (user) {
+            router.push("/dashboard");
+        }
+    }, [user, router]);
+
+    if (user) {
+        return null;
     }
 
     if (authentificationType === "signin") {

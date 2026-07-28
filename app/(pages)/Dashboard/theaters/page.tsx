@@ -159,14 +159,6 @@ export  function Dashboard() {
                             }>
                                 Go to Home Dashboard <FaArrowRight />
                             </button>
-                            <button  className="flex transition items-center gap-2 underline text-blue-500 font-semibold"
-                            onClick={
-                                () => {
-                                    router.push("/dashboard/comments");
-                                }
-                            }>
-                                Go to Comments Dashboard <FaArrowRight />
-                            </button>
                             <button className="flex transition items-center gap-2 underline text-blue-500 font-semibold"
                             onClick={
                                 () => {
@@ -201,17 +193,17 @@ export  function Dashboard() {
                             </div>
                         </div>
                     </div>
-                    <div className="rounded-xl bg-white p-6 shadow dark:bg-neutral-900">
+                    <div className="rounded-xl bg-white p-6 shadow">
                         <h2 className="text-lg font-semibold">Theater Information</h2>
                         <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
-                            <div className="rounded-lg bg-blue-100 p-4 text-center dark:bg-neutral-800">
+                            <div className="rounded-lg bg-blue-100 p-4 text-center">
                                 <p className="text-2xl font-bold text-blue-500">
                                    {theaterCount !== null ? theaterCount : "Loading..."}
                                 </p>
                                 <p className="text-sm text-black">Number of Theaters</p>
                             </div>
 
-                        <div className="rounded-lg bg-blue-100 p-4 text-center dark:bg-neutral-800">
+                        <div className="rounded-lg bg-blue-100 p-4 text-center">
                             <p className="text-2xl font-bold text-blue-500"> 
                                 {data ? data.mostCommonState : "Loading..."}
                             </p>
