@@ -9,20 +9,20 @@ import {FaArrowRight} from "react-icons/fa"
 
 import Header from "@/components/molecules/Header/Header";
 import Information from "@/components/organisms/Information/Information";
-import getAllTheaters from "@/lib/helpers/allTheaters/script";
-import getMostCommonState from "@/lib/helpers/getMostCommonState/script";
+import getNewestComment, { NewestComment } from "@/lib/helpers/getNewestComment/script";
 
-interface MostCommonState {
-  mostCommonState: string;
-  count: number;
-  timestamp: number;
+interface CommentDocument extends NewestComment {
+    name?: string;
+    email?: string;
+    text?: string;
+    date?: string | number | Date;
 }
 
 export  function Dashboard() {
     const [information, setInformation] = useState(false);
     const [randomNum, setRandomNum] = useState(0);
     const [firstLoad, setFirstLoad] = useState(true);
-    const [data, setData] = useState<MostCommonState | null>(null);
+        const [newestComment, setNewestComment] = useState<CommentDocument | null>(null);
 
     const { user, loading, signout } = useAuth();
 
@@ -56,19 +56,18 @@ export  function Dashboard() {
         }
     };
 
-     useEffect(() => {
-    async function fetchData() {
-      try {
-        const result = await getMostCommonState();
-        setData(result);
-      } catch (error) {
-        console.error(error);
-      } finally {
-      }
-    }
+    useEffect(() => {
+        async function fetchNewestComment() {
+            try {
+                const result = await getNewestComment();
+                setNewestComment(result as CommentDocument | null);
+            } catch (error) {
+                console.error(error);
+            }
+        }
 
-    fetchData();
-  }, []);
+        fetchNewestComment();
+    }, []);
 
     if (loading) {
         return (
@@ -196,16 +195,38 @@ export  function Dashboard() {
                         </div>
                     </div>
                     <div className="rounded-xl bg-white p-6 shadow">
-                        <h2 className="text-lg font-semibold">Comment Information</h2>
-                        <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
-                            <div className="rounded-lg bg-blue-100 p-4 text-center">
-                                <p className="text-2xl font-bold text-blue-500">
-                                   1234
-                                </p>
-                                <p className="text-sm text-black">Number of Comments</p>
+                        <div className="mt-4W">
+                            <div className="bg-blue-100 rounded-xl p-4">
+                                {newestComment ? (
+                                    <div className="space-y-2">
+                                        <h2 className="text-lg font-semibold text-blue-500">Most Recent Comments</h2>
+                                        <p>
+                                            <span className="font-semibold">Name:</span>{" "}
+                                            {newestComment.name ?? "Unknown"}
+                                        </p>
+                                        <p>
+                                            <span className="font-semibold">Email:</span>{" "}
+                                            {newestComment.email ?? "Unknown"}
+                                        </p>
+                                        <p>
+                                            <span className="font-semibold">Comment:</span>{" "}
+                                            {newestComment.text ?? "No comment text available"}
+                                        </p>
+                                        <p>
+                                            <span className="font-semibold">Date:</span>{" "}
+                                            {newestComment.date
+                                                ? new Date(newestComment.date).toLocaleString()
+                                                : "Unknown"}
+                                        </p>
+                                    </div>
+                                ) : (
+                                    <p className="mt-3 text-sm text-neutral-500 dark:text-neutral-400">
+                                        No recent comment found.
+                                    </p>
+                                )}
                             </div>
+                        </div>
                     </div>
-                </div>
                </div>
         </main>
     );
