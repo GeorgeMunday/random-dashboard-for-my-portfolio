@@ -9,16 +9,16 @@ import { FaArrowRight } from "react-icons/fa";
 
 import Header from "@/components/molecules/Header/Header";
 import Information from "@/components/organisms/Information/Information";
-import { TheaterDocument } from "@/lib/helpers/displayTheaters/script";
-import { searchTheaters } from "@/lib/helpers/searchTheaters/script";
+import { CommentDocument } from "@/lib/helpers/displayComments/script";
+import { searchComments } from "@/lib/helpers/searchComments/script";
 
 
 
 export  function Dashboard() {
     const [information, setInformation] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
-    const [theaters, setTheaters] = useState<TheaterDocument[]>([]);
-    const [loadingTheaters, setLoadingTheaters] = useState(false);
+    const [comments, setComments] = useState<CommentDocument[]>([]);
+    const [loadingComments, setLoadingComments] = useState(false);
     const [searched, setSearched] = useState(false);
 
     const { user, loading } = useAuth();
@@ -28,18 +28,18 @@ export  function Dashboard() {
     const handleSearch = async () => {
         try {
             if (!searchTerm.trim()) {
-                setTheaters([]);
+                setComments([]);
                 setSearched(false);
                 return;
             }
-            setLoadingTheaters(true);
-            const data = await searchTheaters(searchTerm);
-            setTheaters(data.documents);
+            setLoadingComments(true);
+            const data = await searchComments(searchTerm);
+            setComments(data.documents);
             setSearched(true);
         } catch (error) {
             console.error(error);
         } finally {
-            setLoadingTheaters(false);
+            setLoadingComments(false);
         }
     };
 
@@ -109,22 +109,22 @@ export  function Dashboard() {
                         </div>
                         <div className="rounded-xl bg-white p-6 shadow dark:bg-neutral-900 w-full md:w-1/2">
                            <h2 className="text-lg font-semibold">
-                                Search Here by City
+                                Search Here by Keyword
                             </h2>
                             <div className="flex gap-4">
                             <input
                                 type="text"
-                                placeholder="Enter city name"
+                                placeholder="Enter keyword"
                                 value={searchTerm}
                                 onChange={(event) => setSearchTerm(event.target.value)}
                                 className="w-full rounded-md border border-gray-300 p-2 mt-1 focus:border-blue-500 focus:ring focus:ring-blue-200 dark:bg-neutral-800 dark:text-white dark:border-neutral-700"
                             />
                             <button
                                 onClick={handleSearch}
-                                disabled={loadingTheaters}
+                                disabled={loadingComments}
                                 className="bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 disabled:bg-gray-400"
                             >
-                              {loadingTheaters ? "Searching..." : "Search"}
+                              {loadingComments ? "Searching..." : "Search"}
                             </button>
                             </div>
                         </div>
@@ -133,15 +133,15 @@ export  function Dashboard() {
                             <h2 className="text-lg font-semibold">
                                     Search Results
                             </h2>
-                            <div className={`${theaters.length == 0? "" : "mt-4"} grid gap-4 md:grid-cols-2 xl:grid-cols-4`}>
-                                {searched && theaters.length === 0 ? (
+                            <div className={`${comments.length == 0? "" : "mt-4"} grid gap-4 md:grid-cols-2 xl:grid-cols-4`}>
+                                {searched && comments.length === 0 ? (
                                     <p >
-                                        No theaters matched your search.
+                                        No comments matched your search.
                                     </p>
                                 ) : (
-                                    theaters.map((theater) => (
+                                    comments.map((comment) => (
                                         <div
-                                    key={theater._id}
+                                    key={comment._id}
                                     className="rounded-lg bg-blue-100 p-4"
                                 >
                                     <div className="flex items-start justify-between gap-3">
@@ -150,23 +150,13 @@ export  function Dashboard() {
                                                 Theater ID
                                             </p>
                                             <p className="text-xl font-bold text-blue-600">
-                                                {theater.theaterId}
+                                                {comment.text}
                                             </p>
                                         </div>
 
                                         <span className="rounded-full bg-blue-100 px-3 py-1 text-xs font-semibold text-blue-700">
-                                            {theater.location.address.state}
+                                            {comment.name}
                                         </span>
-                                    </div>
-
-                                    <div>
-                                        <p>{theater.location.address.street1}</p>
-                                        <p className="text-xs">
-                                            {theater.location.address.city}, {theater.location.address.state} {theater.location.address.zipcode}
-                                        </p>
-                                        <p className="text-xs">
-                                            Coordinates: {theater.location.geo.coordinates[1]}, {theater.location.geo.coordinates[0]}
-                                        </p>
                                     </div>
                                 </div>
                                     ))

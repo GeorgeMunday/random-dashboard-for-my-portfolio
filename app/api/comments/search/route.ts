@@ -1,17 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 import clientPromise from "@/lib/database/connection";
 
-// this function handles the GET request to search for comments based on the city query parameter
-
 export async function GET(req: NextRequest) {
   try {
-    const searchParams = req.nextUrl.searchParams;
-    const city = searchParams.get("city")?.trim() ?? "";
+    const text = req.nextUrl.searchParams.get("text")?.trim();
 
-    if (!city) {
+    if (!text) {
       return NextResponse.json(
         {
-          message: "City query parameter is required.",
+          connected: false,
+          message: "Query parameter 'text' is required.",
           documents: [],
         },
         { status: 400 }
@@ -23,20 +21,26 @@ export async function GET(req: NextRequest) {
     const collection = db.collection("comments");
 
     const documents = await collection
-      .find({})
+      .find({
+        text: {
+          $regex: text,
+          $options: "i",
+        },
+      })
       .limit(50)
       .toArray();
 
     return NextResponse.json({
       connected: true,
-      message: "Connection successful",
+      message: `${documents.length} comment(s) found.`,
+      count: documents.length,
       documents,
     });
   } catch (error: unknown) {
     return NextResponse.json(
       {
         connected: false,
-        message: "Connection failed",
+        message: "Failed to search comments.",
         error: error instanceof Error ? error.message : "Unknown error",
       },
       { status: 500 }

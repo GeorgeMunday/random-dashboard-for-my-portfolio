@@ -1,42 +1,60 @@
-import { NextResponse, NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import clientPromise from "@/lib/database/connection";
-
-// this file is here to return all of the comments in the database and return a response of sample data
-// it it intended to be used in the application
 
 export async function GET(req: NextRequest) {
   try {
-    const amount = req.nextUrl.searchParams.get("amount") ?? "0";
-    const skip = req.nextUrl.searchParams.get("skip") ?? "0";
-    const client = await clientPromise;
+    const amount = req.nextUrl.searchParams.get("amount");
+    const skip= req.nextUrl.searchParams.get("skip");
 
-    if (skip == "0" || amount == "0") {
-        return NextResponse.json(
-            {
-                message: "Missing required query parameters",
-            },
-            { status: 400 }
-        );
+    if (amount === null || skip === null) {
+      return NextResponse.json(
+        {
+          message: "Missing required query parameters: amount and skip",
+        },
+        { status: 400 }
+      );
     }
 
+    const amountNum = Number(amount);
+    const skipNum = Number(skip);
+    if (
+      Number.isNaN(amountNum) ||
+      Number.isNaN(skipNum) ||
+      amountNum < 1 ||
+      skipNum < 0
+    ) {
+      return NextResponse.json(
+        {
+          message:
+            "Invalid query parameters. 'amount' must be greater than 0 and 'skip' must be 0 or greater.",
+        },
+        { status: 400 }
+      );
+    }
+
+    const client = await clientPromise;
     const db = client.db("sample_mflix");
     const collection = db.collection("comments");
-
     const documents = await collection
       .find({})
-      .skip(parseInt(skip))
-      .limit(parseInt(amount))
+      .skip(skipNum)
+      .limit(amountNum)
       .toArray();
 
-    return NextResponse.json({
-      connected: true,
-      message: "Connection successful",
-      documents,
-    });
+    return NextResponse.json(
+      {
+        connected: true,
+        message: "Comments retrieved successfully",
+        count: documents.length,
+        documents,
+      },
+      { status: 200 }
+    );
   } catch (error: unknown) {
     return NextResponse.json(
       {
-        message: "Connection failed",
+        connected: false,
+        message: "Failed to retrieve comments",
         error: error instanceof Error ? error.message : "Unknown error",
       },
       { status: 500 }

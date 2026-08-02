@@ -121,7 +121,7 @@ const Authentification = () => {
                         onChange={(e) =>
                             setEmail(e.target.value)
                         }
-                        className="rounded border border-gray-300 bg-white px-4 py-2 dark:bg-black"
+                        className="rounded border border-gray-300 bg-white px-4 py-2"
                     />
 
                     <input
@@ -131,7 +131,7 @@ const Authentification = () => {
                         onChange={(e) =>
                             setPassword(e.target.value)
                         }
-                        className="rounded border border-gray-300 bg-white px-4 py-2 dark:bg-black"
+                        className="rounded border border-gray-300 bg-white px-4 py-2"
                     />
 
                     <button
