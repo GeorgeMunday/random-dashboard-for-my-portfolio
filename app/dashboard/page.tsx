@@ -18,6 +18,7 @@ import getAllUsers from "@/lib/helpers/allUsers/script";
 export function Dashboard() {
     const [information, setInformation] = useState(false);
     const [firstLoad, setFirstLoad] = useState(true);
+    const [firstLoadDiget, setFirstLoadDiget] = useState(true);
     const [randomNum, setRandomNum] = useState(0);
     const [randomDiget, setRandomDiget] = useState(0);
     const [apiTime, setApiTime] = useState<number | null>(null);
@@ -32,7 +33,7 @@ export function Dashboard() {
     const router = useRouter();
 
     const randomDigetLoader = () => {
-        setFirstLoad(false);
+        setFirstLoadDiget(false);
         for (let i = 0; i < 20; i++) {
             setTimeout(() => {
                 const randomNumber = Math.floor(Math.random() * 100);
@@ -264,7 +265,7 @@ export function Dashboard() {
                             className="flex h-20 w-20 items-center text-white justify-center rounded-full bg-blue-500 text-sm font-medium text-neutral-700transition hover:bg-blue-400"
                             onClick={randomDigetLoader}
                         >
-                            {firstLoad ? "Click Here" : randomDiget}
+                            {firstLoadDiget ? "Click Here" : randomDiget}
                         </button>
                     </div>
                 </div>
