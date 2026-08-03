@@ -157,7 +157,7 @@ export function Dashboard() {
 
                 {/* action button and also random navigation */}
                 <div className="flex flex-col gap-6 md:flex-row w-full">
-                    <div className="rounded-xl bg-white p-6 shadow dark:bg-neutral-900 w-full md:w-1/2">
+                    <div className="rounded-xl bg-white p-6 shadow w-full md:w-1/2">
                         <h2 className="text-lg font-semibold">Dashboard Navigation</h2>
                         <div className="flex flex-col gap-4 mt-4">
                             <button
