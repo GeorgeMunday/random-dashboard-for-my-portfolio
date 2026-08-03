@@ -100,6 +100,14 @@ export  function Dashboard() {
                             <button  className="flex transition items-center gap-2 underline text-blue-500 font-semibold"
                             onClick={
                                 () => {
+                                    router.push("/dashboard/comments");
+                                }
+                            }>
+                                Go to Comments Dashboard <FaArrowRight />
+                            </button>
+                            <button  className="flex transition items-center gap-2 underline text-blue-500 font-semibold"
+                            onClick={
+                                () => {
                                     router.push("/dashboard/theaters");
                                 }
                             }>
@@ -147,7 +155,7 @@ export  function Dashboard() {
                                     <div className="flex items-start justify-between gap-3">
                                         <div>
                                             <p>
-                                                Theater ID
+                                                Comment Name
                                             </p>
                                             <p className="text-xl font-bold text-blue-600">
                                                 {comment.text}

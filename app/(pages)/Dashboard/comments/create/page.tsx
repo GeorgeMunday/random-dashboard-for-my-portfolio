@@ -7,15 +7,23 @@ import { FaArrowRight } from 'react-icons/fa'
 import Header from '@/components/molecules/Header/Header'
 import Information from '@/components/organisms/Information/Information'
 
+import createComment from '@/lib/helpers/createComment/script'
+
 const Page = () => {
     const [information, setInformation] = useState(false)
     const [commentName, setCommentName] = useState('')
     const [commentText, setCommentText] = useState('')
     const router = useRouter()
 
-    const onSubmitComment = (e: React.FormEvent<HTMLFormElement>) => {
+    const onSubmitComment = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        // implement submission logic here
+        await createComment(commentName, commentText)
+        setCommentName('')
+        setCommentText('')
+    }
+
+    const createSampleComment = async () => {
+        await createComment('Hardcoded Test User', 'This is a hardcoded test comment')
     }
 
     if (information) {
@@ -45,6 +53,14 @@ const Page = () => {
                             >
                                 Go to Home Dashboard <FaArrowRight />
                             </button>
+                            <button
+                                className="flex items-center gap-2 underline text-blue-500 font-semibold"
+                                onClick={() =>
+                                    router.push("/dashboard/comments")
+                                }
+                            >
+                                Go to Comments Dashboard <FaArrowRight />
+                            </button>
 
                             <button
                                 className="flex items-center gap-2 underline text-blue-500 font-semibold"
@@ -59,7 +75,9 @@ const Page = () => {
                     <div className="rounded-xl bg-white p-6 shadow dark:bg-neutral-900 w-full md:w-1/2">
                         <h2 className="text-lg font-semibold">Create Sample Comment</h2>
                         <button
-                                    className="mt-4 inline-flex items-center gap-2 bg-blue-500 text-white px-4 py-2 rounded-md font-semibold"
+                            type="button"
+                            onClick={createSampleComment}
+                            className="mt-4 inline-flex items-center gap-2 bg-blue-500 text-white px-4 py-2 rounded-md font-semibold"
                         >
                             Click Here to Create a Sample Comment
                         </button>

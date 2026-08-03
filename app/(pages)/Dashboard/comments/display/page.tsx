@@ -89,7 +89,14 @@ export function Dashboard() {
                             >
                                 Go to Home Dashboard <FaArrowRight />
                             </button>
-
+                            <button
+                                className="flex items-center gap-2 underline text-blue-500 font-semibold"
+                                onClick={() =>
+                                    router.push("/dashboard/comments")
+                                }
+                            >
+                                Go to Comments Dashboard <FaArrowRight />
+                            </button>
                             <button
                                 className="flex items-center gap-2 underline text-blue-500 font-semibold"
                                 onClick={() =>
@@ -156,7 +163,9 @@ export function Dashboard() {
                                         </div>
 
                                         <span className="rounded-full bg-blue-100 px-3 py-1 text-xs font-semibold text-blue-700">
-                                            {comment.date}
+                                            {comment.createdAt
+                                                ? new Date(comment.createdAt).toLocaleString()
+                                                : "Unknown"}
                                         </span>
                                     </div>
 

@@ -1,5 +1,13 @@
 import axios from "axios";
 
+export interface DeleteCommentResponse {
+  success: boolean;
+  message?: string;
+  deletedCount?: number;
+  deletedId?: string;
+  error?: string;
+}
+
 export interface GetCommentsParams {
   amount?: number;
   skip?: number;
@@ -11,7 +19,7 @@ export interface CommentDocument {
   email: string;
   movie_id: string;
   text: string;
-  date: string;
+  createdAt: string;
 }
 
 export interface GetCommentsResponse {
@@ -32,6 +40,17 @@ export async function getComments({
         amount,
         skip,
       },
+    }
+  );
+
+  return data;
+}
+
+export async function deleteComment(commentId: string): Promise<DeleteCommentResponse> {
+  const { data } = await axios.delete<DeleteCommentResponse>(
+    "/api/comments/delete",
+    {
+      params: { id: commentId },
     }
   );
 

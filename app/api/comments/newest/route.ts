@@ -14,7 +14,7 @@ export async function GET() {
 
     const documents = await collection
       .find({})
-      .sort({ date: -1 })
+      .sort({ createdAt: -1 })
       .limit(1)
       .toArray();
 

@@ -214,8 +214,8 @@ export  function Dashboard() {
                                         </p>
                                         <p>
                                             <span className="font-semibold">Date:</span>{" "}
-                                            {newestComment.date
-                                                ? new Date(newestComment.date).toLocaleString()
+                                            {newestComment.createdAt
+                                                ? new Date(newestComment.createdAt).toLocaleString()
                                                 : "Unknown"}
                                         </p>
                                     </div>

@@ -31,7 +31,7 @@ export default async function getMostCommonState() {
   }
 
   try {
-    const response = await axios.get("/api/theaters/mostcommonstate");
+    const response = await axios.get("/api/theaters/mostCommonState");
 
     const result = {
       mostCommonState: response.data.mostCommonState,
