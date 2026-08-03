@@ -1,4 +1,4 @@
-## This is a project that i can show imployers that i can do next js and mongo db 
+## This is a project that i can show Employers that i can do next js and mongo db 
 
 ## Features 
 
