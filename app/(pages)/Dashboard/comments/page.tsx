@@ -15,7 +15,7 @@ interface CommentDocument extends NewestComment {
     name?: string;
     email?: string;
     text?: string;
-    date?: string | number | Date;
+    createdAt?: string | number | Date | null;
 }
 
 export  function Dashboard() {
@@ -214,9 +214,15 @@ export  function Dashboard() {
                                         </p>
                                         <p>
                                             <span className="font-semibold">Date:</span>{" "}
-                                            {newestComment.createdAt
-                                                ? new Date(newestComment.createdAt).toLocaleString()
-                                                : "Unknown"}
+                                            {(() => {
+                                                const rawDate = newestComment.createdAt;
+                                                if (!rawDate) return "Unknown";
+
+                                                const parsedDate = new Date(rawDate);
+                                                return Number.isNaN(parsedDate.getTime())
+                                                    ? "Unknown"
+                                                    : parsedDate.toLocaleString();
+                                            })()}
                                         </p>
                                     </div>
                                 ) : (
