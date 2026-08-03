@@ -3,7 +3,7 @@ import axios from "axios";
 const CACHE_KEY =
   process.env.NEXT_PUBLIC_NEWESTCOMMENT_CACHE_KEY ?? "newestCommentCache";
 
-const CACHE_TIME = 5 * 60 * 1000;
+const CACHE_TIME =  60 * 1000;
 
 export interface NewestComment {
   [key: string]: unknown;
