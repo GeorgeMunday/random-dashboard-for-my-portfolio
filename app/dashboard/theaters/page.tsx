@@ -11,6 +11,7 @@ import Header from "@/components/molecules/Header/Header";
 import Information from "@/components/organisms/Information/Information";
 import getAllTheaters from "@/lib/helpers/allTheaters/script";
 import getMostCommonState from "@/lib/helpers/getMostCommonState/script";
+import UserInformationTile from "@/components/molecules/UserInformationTile/UserInformationTile";
 
 interface MostCommonState {
   mostCommonState: string;
@@ -124,26 +125,7 @@ export  function Dashboard() {
             />
 
             <div className=" gap-6 p-6 flex flex-col">
-                {/* welcome message that has user information */}
-                    <div className="rounded-xl bg-white p-6 shadow dark:bg-neutral-900">
-                        <div className="flex items-center justify-between gap-4">
-                            <div className="space-y-2">
-                                <h1 className="text-2xl font-bold">
-                                    Welcome, <span className="font-bold text-blue-500">{user.username ?? "there"}</span>
-                                </h1>
-                                <p className="text-xl text-neutral-500 dark:text-neutral-400">
-                                    This is your Theaters dashboard — access features here and manage your account.
-                                </p>
-                            </div>
-
-                            <button
-                                onClick={signout}
-                                className="shrink-0 rounded-lg bg-blue-500 px-4 py-2 text-white transition hover:bg-blue-600"
-                            >
-                                Sign Out
-                            </button>
-                        </div>
-                    </div>
+                    <UserInformationTile user={user} signout={signout} />
                     {/* action button and also random navigation */}
                     <div className="flex flex-col gap-6 md:flex-row w-full">
                         <div className="rounded-xl bg-white p-6 shadow dark:bg-neutral-900 w-full md:w-1/2">
