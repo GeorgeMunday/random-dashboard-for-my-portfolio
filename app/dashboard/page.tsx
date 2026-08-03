@@ -64,7 +64,6 @@ export function Dashboard() {
         }
     };
 
-
     useEffect(() => {
         if (!user) return;
 
@@ -92,7 +91,7 @@ export function Dashboard() {
 
         loadUserCount();
     }, [user]);
-    
+
     useEffect(() => {
         if (!user) return;
 
@@ -100,8 +99,7 @@ export function Dashboard() {
             try {
                 const count = await getAllTheaters();
                 setTheaterCount(count);
-            }
-            catch (error) {
+            } catch (error) {
                 console.error("Failed to load theater count:", error);
                 setTheaterCount(null);
             }
@@ -117,8 +115,7 @@ export function Dashboard() {
             try {
                 const count = await getAllComments();
                 setCommentCount(count);
-            }
-            catch (error) {
+            } catch (error) {
                 console.error("Failed to load comment count:", error);
                 setCommentCount(null);
             }
@@ -138,29 +135,26 @@ export function Dashboard() {
     if (!user) {
         return (
             <div className="flex min-h-screen items-center justify-center">
-                <p className="text-lg font-semibold">
-                    You are not signed in.
-                </p>
+                <p className="text-lg font-semibold">You are not signed in.</p>
             </div>
         );
     }
 
     if (information) {
         return (
-            <div className="flex flex-col flex-1 bg-zinc-50 font-sans dark:bg-black ">
-                <Header
-                    information={information}
-                    setInformation={setInformation}
-                />
+            <div className="flex flex-col flex-1 bg-zinc-50 font-sans dark:bg-black">
+                <Header information={information} setInformation={setInformation} />
                 <Information />
             </div>
         );
     }
 
     return (
-        <main className="min-h-screen  bg-gray-100 dark:bg-neutral-950">
-            <Header information={information} setInformation={setInformation} />
-                 <UserInformationTile user={user} signout={signout} />
+        <main className="min-h-screen bg-gray-100 dark:bg-neutral-950">
+                            <Header information={information} setInformation={setInformation} />
+            <div className="gap-6 p-6 flex flex-col">
+                <UserInformationTile user={user} signout={signout} />
+
                 {/* action button and also random navigation */}
                 <div className="flex flex-col gap-6 md:flex-row w-full">
                     <div className="rounded-xl bg-white p-6 shadow dark:bg-neutral-900 w-full md:w-1/2">
@@ -168,65 +162,51 @@ export function Dashboard() {
                         <div className="flex flex-col gap-4 mt-4">
                             <button
                                 className="flex transition items-center gap-2 underline text-blue-500 font-semibold"
-                                onClick={() => {
-                                    router.push("/dashboard/comments");
-                                }}
+                                onClick={() => router.push("/dashboard/comments")}
                             >
                                 Go to Comments Dashboard <FaArrowRight />
                             </button>
                             <button
                                 className="flex transition items-center gap-2 underline text-blue-500 font-semibold"
-                                onClick={() => {
-                                    router.push("/dashboard/theaters");
-                                }}
+                                onClick={() => router.push("/dashboard/theaters")}
                             >
                                 Go to Theaters Dashboard <FaArrowRight />
                             </button>
                         </div>
                     </div>
+
                     <div className="rounded-xl bg-white p-6 shadow dark:bg-neutral-900 w-full md:w-1/2">
-                        <h2 className="text-lg font-semibold">
-                            Random Dashboard Navigation
-                        </h2>
+                        <h2 className="text-lg font-semibold">Random Dashboard Navigation</h2>
 
                         <div className="flex items-center justify-center">
                             <button
                                 type="button"
-                                className="flex h-20 w-20 items-center text-white justify-center rounded-full bg-blue-500 text-sm font-medium text-neutral-700transition hover:bg-blue-400"
+                                className="flex h-20 w-20 items-center text-white justify-center rounded-full bg-blue-500 text-sm font-medium transition hover:bg-blue-400"
                                 onClick={randomLoader}
                             >
-                                {firstLoad
-                                    ? "Click Here"
-                                    : randomNum === 0
-                                    ? "Comments"
-                                    : "Theaters"}
+                                {firstLoad ? "Click Here" : randomNum === 0 ? "Comments" : "Theaters"}
                             </button>
                         </div>
                     </div>
                 </div>
+
                 {/* statistics */}
                 <div className="rounded-xl bg-white p-6 shadow dark:bg-neutral-900">
                     <h2 className="text-lg font-semibold">Statistics</h2>
 
                     <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-3">
                         <div className="rounded-lg bg-blue-100 p-4 text-center dark:bg-neutral-800">
-                            <p className="text-2xl font-bold text-blue-500">
-                                {userCount ?? "0"}
-                            </p>
+                            <p className="text-2xl font-bold text-blue-500">{userCount ?? "0"}</p>
                             <p className="text-sm text-black">Total Users</p>
                         </div>
 
                         <div className="rounded-lg bg-blue-100 p-4 text-center dark:bg-neutral-800">
-                            <p className="text-2xl font-bold text-blue-500">
-                                {commentCount ?? "0"}
-                            </p>
+                            <p className="text-2xl font-bold text-blue-500">{commentCount ?? "0"}</p>
                             <p className="text-sm text-black">Sample Data Comments</p>
                         </div>
 
                         <div className="rounded-lg bg-blue-100 p-4 text-center dark:bg-neutral-800">
-                            <p className="text-2xl font-bold text-blue-500">
-                                {theaterCount ?? "0"}
-                            </p>
+                            <p className="text-2xl font-bold text-blue-500">{theaterCount ?? "0"}</p>
                             <p className="text-sm text-black">Sample Data Theaters</p>
                         </div>
                     </div>
@@ -238,40 +218,34 @@ export function Dashboard() {
                     <div className="flex items-center justify-center">
                         <button
                             type="button"
-                            className="flex h-20 w-20 items-center text-white justify-center rounded-full bg-blue-500 text-sm font-medium text-neutral-700transition hover:bg-blue-400"
+                            className="flex h-20 w-20 items-center text-white justify-center rounded-full bg-blue-500 text-sm font-medium transition hover:bg-blue-400"
                             onClick={randomDigetLoader}
                         >
                             {firstLoadDiget ? "Click Here" : randomDiget}
                         </button>
                     </div>
                 </div>
+
                 <div className="rounded-xl bg-white p-6 shadow dark:bg-neutral-900">
                     <h2 className="text-lg font-semibold">Server Information</h2>
                     <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-3">
                         <div className="rounded-lg bg-blue-100 p-4 text-center dark:bg-neutral-800">
-                            <p className="text-2xl font-bold text-blue-500">
-                                {isOnline ? "Connected" : "Disconnected"}
-                            </p>
+                            <p className="text-2xl font-bold text-blue-500">{isOnline ? "Connected" : "Disconnected"}</p>
                             <p className="text-sm text-black">WiFi Status</p>
                         </div>
 
                         <div className="rounded-lg bg-blue-100 p-4 text-center dark:bg-neutral-800">
-                            <p className="text-2xl font-bold text-blue-500">
-                                {typeof apiTime === "number"
-                                    ? `${apiTime.toFixed(2)} ms`
-                                    : "N/A"}
-                            </p>
+                            <p className="text-2xl font-bold text-blue-500">{typeof apiTime === "number" ? `${apiTime.toFixed(2)} ms` : "N/A"}</p>
                             <p className="text-sm text-black">Server Latency</p>
                         </div>
 
                         <div className="rounded-lg bg-blue-100 p-4 text-center dark:bg-neutral-800">
-                            <p className="text-2xl font-bold text-blue-500">
-                                {dbStatus || "N/A"}
-                            </p>
+                            <p className="text-2xl font-bold text-blue-500">{dbStatus || "N/A"}</p>
                             <p className="text-sm text-black">Database Status</p>
                         </div>
                     </div>
                 </div>
+            </div>
         </main>
     );
 }
