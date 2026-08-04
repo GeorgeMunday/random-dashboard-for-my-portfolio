@@ -19,7 +19,7 @@ export function DashboardSkeleton() {
 
     const user = {
         id: "123",
-        username: "John Doe",
+        username: "NA",
         email: "john.doe@example.com"
     }
 
