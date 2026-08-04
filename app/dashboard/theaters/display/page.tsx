@@ -11,6 +11,7 @@ import { FaArrowRight } from "react-icons/fa";
 import Header from "@/components/molecules/Header/Header";
 import Information from "@/components/organisms/Information/Information";
 import { TheaterDocument } from "@/lib/helpers/displayTheaters/script";
+import Loading from "./loading";
 
 export function Dashboard() {
     const [information, setInformation] = useState(false);
@@ -40,9 +41,7 @@ export function Dashboard() {
 
     if (loading) {
         return (
-            <div className="flex min-h-screen items-center justify-center">
-                <p className="text-lg">Loading...</p>
-            </div>
+            <Loading/>
         );
     }
 

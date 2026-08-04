@@ -15,7 +15,7 @@ import getAllComments from "@/lib/helpers/allComments/script";
 import getAllTheaters from "@/lib/helpers/allTheaters/script";
 import getAllUsers from "@/lib/helpers/allUsers/script";
 import UserInformationTile from "@/components/molecules/UserInformationTile/UserInformationTile";
-import DashboardSkeleton from "@/components/molecules/Loading/DashboardSkeleton/DashboardSkeleton";
+import Loading from "./loading";
 
 export function Dashboard() {
     const [information, setInformation] = useState(false);
@@ -127,7 +127,7 @@ export function Dashboard() {
 
     if (loading) {
         return (
-            <DashboardSkeleton/>
+            <Loading/>
         );
     }
 

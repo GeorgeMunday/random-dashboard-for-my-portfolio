@@ -11,6 +11,7 @@ import Header from "@/components/molecules/Header/Header";
 import Information from "@/components/organisms/Information/Information";
 import getNewestComment, { NewestComment } from "@/lib/helpers/getNewestComment/script";
 import UserInformationTile from "@/components/molecules/UserInformationTile/UserInformationTile";
+import Loading from "./loading";
 
 interface CommentDocument extends NewestComment {
     name?: string;
@@ -72,9 +73,7 @@ export  function Dashboard() {
 
     if (loading) {
         return (
-            <div className="flex min-h-screen items-center justify-center">
-                <p className="text-lg">Loading...</p>
-            </div>
+            <Loading/>
         );
     }
 

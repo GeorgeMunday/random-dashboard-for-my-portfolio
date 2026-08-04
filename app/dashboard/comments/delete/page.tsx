@@ -12,6 +12,7 @@ import Header from "@/components/molecules/Header/Header";
 import Information from "@/components/organisms/Information/Information";
 import { CommentDocument } from "@/lib/helpers/displayComments/script";
 import { searchComments } from "@/lib/helpers/searchComments/script";
+import Loading from "./loading";
 
 
 
@@ -85,9 +86,7 @@ export function Dashboard() {
 
     if (loading) {
         return (
-            <div className="flex min-h-screen items-center justify-center">
-                <p className="text-lg">Loading...</p>
-            </div>
+            <Loading/>
         );
     }
 

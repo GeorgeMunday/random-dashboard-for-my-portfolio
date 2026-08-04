@@ -12,6 +12,7 @@ import Information from "@/components/organisms/Information/Information";
 import getAllTheaters from "@/lib/helpers/allTheaters/script";
 import getMostCommonState from "@/lib/helpers/getMostCommonState/script";
 import UserInformationTile from "@/components/molecules/UserInformationTile/UserInformationTile";
+import Loading from "./loading";
 
 interface MostCommonState {
   mostCommonState: string;
@@ -87,9 +88,7 @@ export  function Dashboard() {
 
     if (loading) {
         return (
-            <div className="flex min-h-screen items-center justify-center">
-                <p className="text-lg">Loading...</p>
-            </div>
+            <Loading/>
         );
     }
 
