@@ -15,6 +15,7 @@ import getAllComments from "@/lib/helpers/allComments/script";
 import getAllTheaters from "@/lib/helpers/allTheaters/script";
 import getAllUsers from "@/lib/helpers/allUsers/script";
 import UserInformationTile from "@/components/molecules/UserInformationTile/UserInformationTile";
+import DashboardSkeleton from "@/components/molecules/Loading/DashboardSkeleton/DashboardSkeleton";
 
 export function Dashboard() {
     const [information, setInformation] = useState(false);
@@ -126,9 +127,7 @@ export function Dashboard() {
 
     if (loading) {
         return (
-            <div className="flex min-h-screen items-center justify-center">
-                <p className="text-lg">Loading...</p>
-            </div>
+            <DashboardSkeleton/>
         );
     }
 
