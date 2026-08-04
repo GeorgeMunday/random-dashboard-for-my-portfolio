@@ -24,9 +24,9 @@ export function DashboardSkeleton() {
     }
 
     return (
-        <main className="min-h-screen bg-gray-100 animate-pulse">
+        <main className="min-h-screen bg-gray-100 ">
             <Header information={information} setInformation={setInformation} />
-            <div className="gap-6 p-6 flex flex-col">
+            <div className="gap-6 p-6 flex flex-col animate-pulse">
                 <UserInformationTile user={user} signout={signout} />
 
                 {/* action button and also random navigation */}
