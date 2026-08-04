@@ -1,11 +1,10 @@
-import jwt, { JwtPayload as BaseJwtPayload } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
+
+import type { UserJwtPayload } from "../../types/user-jwt-payload";
+
+export type { UserJwtPayload } from "../../types/user-jwt-payload";
 
 const SECRET = process.env.JWT_SECRET!;
-
-export interface UserJwtPayload extends BaseJwtPayload {
-  id: string;
-  username: string;
-}
 
 export function createToken(payload: UserJwtPayload) {
   return jwt.sign(payload, SECRET, {

@@ -4,13 +4,9 @@ import React from "react";
 import { FaInfoCircle, FaTimes, } from "react-icons/fa";
 import { MdDashboard } from "react-icons/md";
 
+import type { HeaderProps } from "@/types/header-props";
 
-type InformationProps = {
-  information: boolean;
-  setInformation: React.Dispatch<React.SetStateAction<boolean>>;
-};
-
-const Header = ({ information, setInformation }: InformationProps) => {
+const Header = ({ information, setInformation }: HeaderProps) => {
 
   const titles = [
     "Some Random Dashboard For My Portfolio",

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import clientPromise from "@/lib/database/connection";
 import { verifyToken } from "@/lib/token/script";
-import { CommentDocument } from "@/lib/schemas/comments";
+import type { CommentDocument } from "@/types/comments-schema";
 import { ObjectId } from "mongodb";
 
 export async function POST(req: NextRequest) {

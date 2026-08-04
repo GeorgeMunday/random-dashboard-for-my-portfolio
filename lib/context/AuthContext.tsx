@@ -9,29 +9,8 @@ import {
 
 import { useRouter } from "next/navigation";
 
-interface User {
-    id: string;
-    username: string;
-}
-
-interface AuthContextType {
-
-    user: User | null;
-
-    loading: boolean;
-
-    signin(
-        username: string,
-        password: string
-    ): Promise<void>;
-
-    signup(
-        username: string,
-        password: string
-    ): Promise<void>;
-
-    signout(): Promise<void>;
-}
+import type { AuthContextType } from "@/types/auth-context";
+import type { AuthUser } from "@/types/auth-user";
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
@@ -41,7 +20,7 @@ export function AuthProvider({
     children: React.ReactNode;
 }) {
 
-    const [user, setUser] = useState<User | null>(null);
+    const [user, setUser] = useState<AuthUser | null>(null);
 
     const [loading, setLoading] = useState(true);
 

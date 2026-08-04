@@ -1,12 +1,6 @@
 import React from 'react'
 
-export interface UserInformationTileProps {
-    user: {
-        id: string;
-        username: string;
-    };
-    signout: () => void;
-}
+import type { UserInformationTileProps } from "@/types/user-information-tile-props";
 
 const UserInformationTile = ({ user , signout }: UserInformationTileProps) => {
   return (

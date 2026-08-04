@@ -9,22 +9,17 @@ import {FaArrowRight} from "react-icons/fa"
 
 import Header from "@/components/molecules/Header/Header";
 import Information from "@/components/organisms/Information/Information";
-import getNewestComment, { NewestComment } from "@/lib/helpers/getNewestComment/script";
 import UserInformationTile from "@/components/molecules/UserInformationTile/UserInformationTile";
 import Loading from "./loading";
-
-interface CommentDocument extends NewestComment {
-    name?: string;
-    email?: string;
-    text?: string;
-    createdAt?: string | number | Date | null;
-}
+import getNewestComment from "@/lib/helpers/getNewestComment/script";
+import type { NewestComment } from "@/types/newest-comment";
+import type { DashboardCommentDocument } from "@/types/dashboard-comment-document";
 
 export  function Dashboard() {
     const [information, setInformation] = useState(false);
     const [randomNum, setRandomNum] = useState(0);
     const [firstLoad, setFirstLoad] = useState(true);
-        const [newestComment, setNewestComment] = useState<CommentDocument | null>(null);
+        const [newestComment, setNewestComment] = useState<DashboardCommentDocument | null>(null);
 
     const { user, loading, signout } = useAuth();
 
@@ -62,7 +57,7 @@ export  function Dashboard() {
         async function fetchNewestComment() {
             try {
                 const result = await getNewestComment();
-                setNewestComment(result as CommentDocument | null);
+                setNewestComment(result as DashboardCommentDocument | null);
             } catch (error) {
                 console.error(error);
             }

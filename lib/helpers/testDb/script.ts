@@ -1,12 +1,9 @@
 import axios from "axios";
 
+import type { DbTestResult } from "@/types/db-test-result";
+
 const CACHE_KEY = process.env.NEXT_PUBLIC_DBSTATUS_CACHE_KEY || "dbStatusCache";
 const CACHE_TIME = 5 * 60 * 1000;
-
-interface DbTestResult {
-    connected: boolean;
-    apiTime: number | null;
-}
 
 export default async function testDatabaseConnection(): Promise<DbTestResult> {
     if (typeof window !== "undefined") {

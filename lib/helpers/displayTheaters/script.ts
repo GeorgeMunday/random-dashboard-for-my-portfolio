@@ -1,32 +1,16 @@
 import axios from "axios";
 
-export interface GetTheatersParams {
-  amount?: number;
-  skip?: number;
-}
+import type {
+  GetTheatersParams,
+  GetTheatersResponse,
+  TheaterDocument,
+} from "@/types/theaters-api";
 
-export interface TheaterDocument {
-  _id: string;
-  theaterId: number;
-  location: {
-    address: {
-      street1: string;
-      city: string;
-      state: string;
-      zipcode: string;
-    };
-    geo: {
-      type: string;
-      coordinates: number[];
-    };
-  };
-}
-
-export interface GetTheatersResponse {
-  connected: boolean;
-  message: string;
-  documents: TheaterDocument[];
-}
+export type {
+  GetTheatersParams,
+  GetTheatersResponse,
+  TheaterDocument,
+} from "@/types/theaters-api";
 
 export async function getTheaters({
   amount = 10,

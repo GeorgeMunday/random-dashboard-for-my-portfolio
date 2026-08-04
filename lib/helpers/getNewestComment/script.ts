@@ -1,18 +1,16 @@
 import axios from "axios";
 
+import type {
+  CachedNewestComment,
+  NewestComment,
+} from "@/types/newest-comment";
+
+export type { NewestComment } from "@/types/newest-comment";
+
 const CACHE_KEY =
   process.env.NEXT_PUBLIC_NEWESTCOMMENT_CACHE_KEY ?? "newestCommentCache";
 
 const CACHE_TIME =  60 * 1000;
-
-export interface NewestComment {
-  [key: string]: unknown;
-}
-
-type CachedNewestComment = {
-  comment: NewestComment;
-  timestamp: number;
-};
 
 export default async function getNewestComment(): Promise<NewestComment | null> {
   if (typeof window === "undefined") {

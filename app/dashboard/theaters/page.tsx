@@ -13,19 +13,14 @@ import getAllTheaters from "@/lib/helpers/allTheaters/script";
 import getMostCommonState from "@/lib/helpers/getMostCommonState/script";
 import UserInformationTile from "@/components/molecules/UserInformationTile/UserInformationTile";
 import Loading from "./loading";
-
-interface MostCommonState {
-  mostCommonState: string;
-  count: number;
-  timestamp: number;
-}
+import type { DashboardMostCommonState } from "@/types/dashboard-most-common-state";
 
 export  function Dashboard() {
     const [information, setInformation] = useState(false);
     const [theaterCount, setTheaterCount] = useState<number | null>(null);
     const [randomNum, setRandomNum] = useState(0);
     const [firstLoad, setFirstLoad] = useState(true);
-    const [data, setData] = useState<MostCommonState | null>(null);
+    const [data, setData] = useState<DashboardMostCommonState | null>(null);
 
     const { user, loading, signout } = useAuth();
 
